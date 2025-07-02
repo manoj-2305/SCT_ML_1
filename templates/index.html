@@ -1,0 +1,93 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart House Price Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- NAVIGATION BAR -->
+    <nav>
+        <div class="logo">🏘️ SmartPrice</div>
+        <ul>
+            <li><a href="#" id="home-link">Home</a></li>
+            <li><a href="#" id="about-link">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-container" id="home-section">
+        <div class="form-section">
+            <h2>Enter Property Details</h2>
+            <form id="predict-form" action="/predict" method="post">
+                <label for="sqft">📐 Square Footage</label>
+                <input type="number" name="sqft" id="sqft" required>
+
+                <label for="bedrooms">🛌 Bedrooms</label>
+                <input type="number" name="bedrooms" id="bedrooms" required>
+
+                <label for="bathrooms">🚿 Bathrooms</label>
+                <input type="number" name="bathrooms" step="0.5" id="bathrooms" required>
+
+                <button type="submit">💡 Predict Price</button>
+            </form>
+
+            {% if prediction_text %}
+            <div class="result" id="prediction-result"
+                 data-sqft="{{ sqft }}"
+                 data-bedrooms="{{ bedrooms }}"
+                 data-bathrooms="{{ bathrooms }}">
+                <h3>{{ prediction_text }}</h3>
+                <p>📐 {{ sqft }} sq ft | 🛌 {{ bedrooms }} BR | 🚿 {{ bathrooms }} Bath</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="history-section">
+            <h2>🕘 Prediction History</h2>
+            <ul id="history-list"></ul>
+        </div>
+    </div>
+
+    <!-- ABOUT SECTION -->
+    <div class="about-container" id="about-section" style="display:none;">
+        <h1>About Smart House Price Predictor</h1>
+        <p><strong>Overview:</strong> This internship project focuses on building a predictive web application using machine learning. The model helps users estimate housing prices based on property features like square footage, bedrooms, and bathrooms.</p>
+        <p><strong>Dataset:</strong> We used the Kaggle Ames Housing dataset containing a detailed record of real estate sales. Only the most relevant features were used for this prototype to keep the model simple and explainable.</p>
+        <p><strong>Modeling Approach:</strong> Linear Regression was chosen for its simplicity and interpretability. It maps features to prices using coefficients. The model was evaluated using metrics like Mean Squared Error (MSE), Root Mean Squared Error (RMSE), and R² Score (0.6579).</p>
+        <p><strong>Deployment:</strong> The model is deployed in a Flask web app. Users input their property details in the form, and the server responds with predicted house prices. Real-time conversion from USD to INR and formatted output is included.</p>
+        <p><strong>Frontend Features:</strong> The application has a responsive layout with a left-side input form and right-side dynamic prediction history that clears on reload. History is stored in localStorage until refresh, enhancing UX without permanent storage.</p>
+        <p><strong>Tech Stack:</strong> Python, Pandas, Scikit-learn, Flask, HTML5, CSS3, JavaScript ES6. The UI has been improved with modern styling and responsive layout techniques.</p>
+        <p><strong>Pros:</strong></p>
+        <ul>
+            <li>Simple and accurate for the basic use-case</li>
+            <li>Good UX with responsive design</li>
+            <li>Modular design (easy to add models or features)</li>
+            <li>Real-time prediction and temporary history</li>
+        </ul>
+        <p><strong>Limitations:</strong></p>
+        <ul>
+            <li>Does not account for location-specific data or market fluctuations</li>
+            <li>History is not stored permanently</li>
+            <li>Limited feature set</li>
+        </ul>
+        <p><strong>Future Scope:</strong> Add location data, connect to a real estate API, add user accounts and save permanent history, integrate advanced ML algorithms (Random Forest, XGBoost), or even deploy on cloud (Heroku, AWS, or Streamlit Cloud).</p>
+        <p><strong>Contact:</strong><br>
+        Phone: +91 9876543210<br>
+        Email: info@smartprice.in<br>
+        Location: Bangalore, India</p>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <h4>📞 Get in Touch</h4>
+            <p>Phone: +91 9876543210 | Email: info@smartprice.in | Address: Bangalore, India</p>
+            <p>© 2025 SmartPrice | All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
